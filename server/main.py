@@ -3,6 +3,7 @@ from binance.client import Client
 from typing import Optional, Union
 
 from fastapi import FastAPI
+import json
 import pandas as pd
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
