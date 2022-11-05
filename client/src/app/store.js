@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { cryptoApi } from '../services/cryptoApi';
+import { cryptoApi } from '../services/rapidApi';
 import { forexApi } from '../services/forexApi';
 import { stocksApi } from '../services/stocksApi';
 
