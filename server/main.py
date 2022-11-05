@@ -8,7 +8,7 @@ import pandas as pd
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
 api_secret = "rWULkBSHUf5FLHPaBvrBX7hiHjz4nlVWDuud14QJZ94Bccse0ZlQh0IL91ouqHnH"
-client=Client(api_key,api_secret)
+# client=Client(api_key,api_secret)
 
 app = FastAPI()
 
@@ -54,6 +54,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
 """
 @app.get("/all-crypto/")
 def get_all_crypto_data():
+    client=Client(api_key,api_secret)
     data = client.get_all_tickers()
     data_df = pd.DataFrame(data)
 
@@ -78,6 +79,7 @@ def get_all_crypto_data():
 """
 @app.get("/single-crypto/")
 def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
+    client=Client(api_key,api_secret)
     historical_data = client.get_historical_klines(symbol, interval, start_str, end_str)
     hist_df = pd.DataFrame(historical_data).iloc[:,:6]
     hist_df.columns = ['Open Time', 'Open', 'High', 'Low', 'Close', 'Volume']
