@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 //TODO: add server URL
 const baseUrl = '';
 
-const createReqest = (url) => ({url})
+const createRequest = (url) => ({url})
 
 export const stocksApi = createApi({
     reducerPath: 'stocksApi',
@@ -12,6 +12,5 @@ export const stocksApi = createApi({
         getStocks: builder.query({
             query: () => createRequest('/stocks')
         }),
-        
     })
 });

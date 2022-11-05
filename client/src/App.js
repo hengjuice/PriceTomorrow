@@ -1,10 +1,7 @@
 import React from 'react';
 import { Navbar, Stocks, Forex, Crypto, Homepage} from './components';
-import { Routes, Router, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { Layout, Typography, Space } from 'antd';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './App.css';
 
 
@@ -19,16 +16,23 @@ const App = () => {
       <div className='main'>
       <Layout>
                 <div className="routes">
-                    <Routes>
-                        <Route exact path="/" element={<Homepage/>}/>
-                        <Route exact path="/" element={<Stocks/>}/>
-                        <Route exact path="/" element={<Forex/>}/>
-                        <Route exact path="/" element={<Crypto/>}/>
+                    <Switch>
+                        <Route exact path="/">
+                            <Homepage />
+                        </Route>
+                        <Route exact path="/stocks">
+                            <Stocks />
+                        </Route>
+                        <Route exact path="/forex">
+                            <Forex />
+                        </Route>
                         {/* <Route exact path="/crypto/:coinId">
                             <CryptoDetails />
                         </Route> */}
-                        
-                    </Routes>
+                        <Route exact path="/crypto">
+                            <Crypto />
+                        </Route>
+                    </Switch>
                 </div>
             </Layout>
       </div>
@@ -40,4 +44,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default App

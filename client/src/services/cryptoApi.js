@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 //TODO: add server URL
 const baseUrl = '';
 
-const createReqest = (url) => ({url})
+const createRequest = (url) => ({url})
 
-export const stocksApi = createApi({
+export const cryptoApi = createApi({
     reducerPath: 'cryptoApi',
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({

@@ -1,12 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { cryptoApi } from '../services/rapidApi';
+import { rapidApi } from '../services/rapidApi';
+import { rapidApiStocks } from '../services/rapidApiStocks';
+
 import { forexApi } from '../services/forexApi';
 import { stocksApi } from '../services/stocksApi';
+import { cryptoApi } from '../services/cryptoApi';
 
 export default configureStore({
     reducer: {
         [cryptoApi.reducerPath]: cryptoApi.reducer,
         [forexApi.reducerPath]: forexApi.reducer,
         [stocksApi.reducerPath]: stocksApi.reducer,
+        [rapidApi.reducerPath]: rapidApi.reducer,
+        [rapidApiStocks.reducerPath]: rapidApiStocks.reducer
     },
 })
