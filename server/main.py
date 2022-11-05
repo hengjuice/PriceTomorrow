@@ -96,3 +96,11 @@ def get_ticker_data(ticker: str, period: Optional[str] = "2y", interval: Optiona
     print(stocks)
     return parse_df(stocks)
 
+@app.get("/all-forex")
+def get_forex_data(ticker: str = 'EURUSD=X JPY=X GBPUSD=X', period: Optional[str] = "2y", interval: Optional[str] = "1d"):
+    forex = yf.download(
+                period = period,
+                interval = interval
+            )
+    print(forex)
+    return parse_df(forex)
