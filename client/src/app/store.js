@@ -14,4 +14,8 @@ export default configureStore({
         [rapidApi.reducerPath]: rapidApi.reducer,
         [rapidApiStocks.reducerPath]: rapidApiStocks.reducer
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+        .concat(rapidApi.middleware)
+        .concat(rapidApiStocks.middleware),
 })

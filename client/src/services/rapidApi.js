@@ -20,7 +20,7 @@ export const rapidApi = createApi({
         getCryptoDetails: builder.query({
           query: (coinId) => createRequest(`/coin/${coinId}`),
         }),
-        
+    
         // Note: Change the coin price history endpoint from this - `coin/${coinId}/history/${timeperiod} to this - `coin/${coinId}/history?timeperiod=${timeperiod}`
         getCryptoHistory: builder.query({
           query: ({ coinId, timeperiod }) => createRequest(`coin/${coinId}/history?timeperiod=${timeperiod}`),
@@ -34,3 +34,22 @@ export const {
     useGetExchangesQuery,
     useGetCryptoHistoryQuery,
 } = rapidApi;
+
+
+// const options = {
+//     method: 'GET',
+//     url: 'https://coinranking1.p.rapidapi.com/coins',
+//     params: {
+//       referenceCurrencyUuid: 'yhjMzLPhuIDl',
+//       timePeriod: '24h',
+//       'tiers[0]': '1',
+//       orderBy: 'marketCap',
+//       orderDirection: 'desc',
+//       limit: '50',
+//       offset: '0'
+//     },
+//     headers: {
+//       'X-RapidAPI-Key': 'abbff403f6msh5e1367cddd96b1cp103d18jsn9f50505b47d3',
+//       'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
+//     }
+//   };
