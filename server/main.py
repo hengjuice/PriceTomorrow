@@ -39,8 +39,7 @@ def parse_df(df, ticker):
 
 @app.get("/")
 def read_root():
-    info = client.get_all_tickers()
-    return {"Hello": info}
+    return {"Hello": "world"}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
