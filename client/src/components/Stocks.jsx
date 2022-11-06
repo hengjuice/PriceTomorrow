@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { useGetStocksQuery } from '../services/stocksApi'
 import Loader from './Loader';
+import SharedLayout from './SharedLayout';
+import { timeseriesmockdata } from './DataViz/mock_data/timeseriesmockdata';
 
 const Stocks = () => {
   const [ ticker, setTicker ] = useState();
@@ -16,12 +18,15 @@ const Stocks = () => {
   if (isFetching) return <Loader />;
 
   return (
-    <div>
-      <div>Stock</div>
+    <>
+      <div>Stocks</div>
+      <SharedLayout 
+        data = {timeseriesmockdata}
+      />
       <button onClick={() => setTicker("AAPL")}>
         Click here
       </button>
-    </div>
+    </>
   )
 }
 

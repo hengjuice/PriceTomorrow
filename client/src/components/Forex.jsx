@@ -1,8 +1,11 @@
 import React from 'react'
-
+import SharedLayout from './SharedLayout';
 const Forex = () => {
   return (
-    <div>Forex</div>
+    <>
+      <div>Forex</div>
+      <SharedLayout />
+    </>
   )
 }
 
