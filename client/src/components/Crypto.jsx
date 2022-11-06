@@ -1,8 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react';
+import SharedLayout from './SharedLayout';
+
 
 const Crypto = () => {
   return (
-    <div>Crypto</div>
+    <>
+      <div>Crypto</div>
+      <SharedLayout />
+    </>
   )
 }
 

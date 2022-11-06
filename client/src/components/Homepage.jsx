@@ -7,6 +7,7 @@ import moment from 'moment';
 import CryptoHP from './CryptoHP';
 import StocksHP from './StocksHP';
 import ForexHP from './ForexHP';
+
 import { useGetCryptosQuery } from '../services/rapidApi';
 
 
