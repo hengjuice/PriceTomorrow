@@ -55,11 +55,11 @@ const MultiSelect = ({ chooseTicker }) => {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
-    console.log("MultiSelect: ", value);
   };
 
   const handleChange = () => {
     chooseTicker(ticker);
+    console.log("MultiSelect: ", ticker);
   };
 
   return (

@@ -16,6 +16,7 @@ const Crypto = () => {
 
   const getSymbol = (symbol) => {
     setSymbol(symbol);
+    console.log("Crypto | symbol", symbol);
   };
 
   if (isFetching) return <Loader />;
@@ -25,7 +26,7 @@ const Crypto = () => {
       <div>Crypto</div>
       <SharedLayout 
         data = {timeseriesmockdata}
-        getSymbol = {getSymbol}
+        getTicker = {getSymbol}
       />
     </>
   )
