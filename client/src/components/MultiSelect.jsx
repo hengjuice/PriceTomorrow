@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Button, Box, OutlinedInput, InputLabel, MenuItem, FormControl, Select, Chip } from '@mui/material';
+import data from "../tickers.json";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -13,12 +14,14 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'AAPL',
-  'MSFT',
-  'BTC',
-  'USD/EUR',
-];
+// get all ticker names from json
+
+var dataString = JSON.stringify(data);
+dataString = dataString.split('"').join('');
+dataString = dataString.replace('[','');
+dataString = dataString.replace(']','');
+
+const names = dataString.split(",");
 
 const time_periods = [
   {text: '1 Day', value: '1d'},
