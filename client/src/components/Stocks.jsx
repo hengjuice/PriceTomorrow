@@ -9,11 +9,13 @@ const Stocks = () => {
   const [ ticker, setTicker ] = useState();
   const [ period, setPeriod ] = useState("2y");
 
-  
-
   const { data, isFetching } = useGetStocksQuery({ticker: ticker, period: period});
   console.log("data: ", data);
 
+  const getTicker = (ticker) => {
+    setTicker(ticker);
+    console.log("In stock: ", ticker);
+  };
 
   if (isFetching) return <Loader />;
 
@@ -22,10 +24,8 @@ const Stocks = () => {
       <div>Stocks</div>
       <SharedLayout 
         data = {timeseriesmockdata}
+        getTicker = {getTicker}
       />
-      <button onClick={() => setTicker("AAPL")}>
-        Click here
-      </button>
     </>
   )
 }
