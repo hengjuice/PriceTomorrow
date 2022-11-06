@@ -20,18 +20,18 @@ const names = [
   'USD/EUR',
 ];
 
-const periods = [
-  '1d',
-  '5d',
-  '1mo',
-  '3mo',
-  '6mo',
-  '1y',
-  '2y',
-  '5y',
-  '10y',
-  'ytd',
-  'max'
+const time_periods = [
+  {text: '1 Day', value: '1d'},
+  {text: '5 Days', value: '5d'},
+  {text: '1 Month', value: '1mo'},
+  {text: '3 Months', value: '3mo'},
+  {text: '6 Months', value: '6mo'},
+  {text: '1 Year', value: '1y'},
+  {text: '2 Years', value: '2y'},
+  {text: '5 Years', value: '5y'},
+  {text: '10 Years', value: '10y'},
+  {text: 'Year to Date', value: 'ytd'},
+  {text: 'Maximum', value: 'max'}
 ]
 
 function getStyles(name, personName, theme) {
@@ -43,9 +43,13 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const MultiSelect = ({ chooseTicker }) => {
+const MultiSelect = (props) => {
+  const chooseTicker = props.chooseTicker;
+  const choosePeriod = props.choosePeriod;
+
   const theme = useTheme();
   const [ticker, setTicker] = React.useState([]);
+  const [period, setPeriod] = React.useState([]);
 
   const handleSelect = (event) => {
     const {
@@ -58,8 +62,17 @@ const MultiSelect = ({ chooseTicker }) => {
     console.log("MultiSelect: ", value);
   };
 
+  const handlePeriodSelect = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPeriod(value);
+    console.log("MultiSelect Period: ", period);
+  }
+
   const handleChange = () => {
     chooseTicker(ticker);
+    choosePeriod(period);
   };
 
   return (
@@ -92,6 +105,24 @@ const MultiSelect = ({ chooseTicker }) => {
                 {name}
               </MenuItem>
             ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="period-label">Please Select A Period</InputLabel>
+          <Select
+            labelId="select-period-label"
+            id="period-label"
+            value={period}
+            label="Period"
+            onChange={handlePeriodSelect}>
+              {time_periods.map((time_period) => (
+                <MenuItem
+                  key={time_period.value}
+                  value={time_period.value}
+                >
+                  {time_period.text}
+              </MenuItem>
+              ))}
           </Select>
         </FormControl>
         <Button onClick={handleChange}>
