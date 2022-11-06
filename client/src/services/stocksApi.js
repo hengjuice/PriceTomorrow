@@ -1,16 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-//TODO: add server URL
-const baseUrl = '';
+const baseUrl = 'http://127.0.0.1:8000';
 
 const createRequest = (url) => ({url})
 
 export const stocksApi = createApi({
     reducerPath: 'stocksApi',
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({ baseUrl}),
     endpoints: (builder) => ({
         getStocks: builder.query({
-            query: () => createRequest('/stocks')
+            query: ({ ticker, period }) => createRequest(`/stocks?ticker=${ticker}&period=${period}`),
         }),
-    })
+    }),
 });
+
+export const {
+    useGetStocksQuery
+} = stocksApi
