@@ -6,6 +6,7 @@ import Loader from './Loader';
 import moment from 'moment';
 import CryptoHP from './CryptoHP';
 import StocksHP from './StocksHP';
+import ForexHP from './ForexHP';
 import { useGetCryptosQuery } from '../services/rapidApi';
 
 
@@ -28,6 +29,7 @@ const Homepage = () => {
             <Title level={2} className="heading">Welcome to Argus</Title>
             <CryptoHP />
             <StocksHP />
+            <ForexHP />
         </>
     )
 }
