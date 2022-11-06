@@ -1,4 +1,4 @@
-def getTimeSeries(df):
-    res = [[x, y] for x, y in zip(df['Open Time'], df['Close'])]
+def getTimeSeries(df, timeColName, priceColName):
+    res = [[x, y] for x, y in zip(df[timeColName], df[priceColName])]
 
     return res

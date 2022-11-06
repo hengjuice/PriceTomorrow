@@ -5,11 +5,18 @@ from keras.layers import Dense, LSTM, Activation
 import numpy as np
 import math
 from returnClasses.Crypto import Crypto
+from utility.timeSeries import getTimeSeries
+
+import json
+
+def parse_df_default(df):
+    res = df.to_json(orient="index")
+    parsed = json.loads(res)
+    return parsed     
 
 def predictLSTM(df):
     ClosePrice = df['Close']
 
-    #preprossecing 
     ClosePrice = np.reshape(ClosePrice.values, (len(ClosePrice),1)) 
     scaler = MinMaxScaler(feature_range=(0, 1))
     ClosePrice = scaler.fit_transform(ClosePrice)
@@ -42,11 +49,24 @@ def predictLSTM(df):
     history=model.fit(trainX, trainY, epochs=2, batch_size=1, verbose=2)
 
     # Predicting 
-    trainPredict = model.predict(trainX) #Traning data
-    testPredict = model.predict(testX) #Testing data
+    trainPredict = model.predict(trainX).tolist() #Training data
+    testPredict = model.predict(testX).tolist() #Testing data
 
+    finalPredictList = [np.nan] * len(df)
+    toBeAdded = [pred[0] for pred in trainPredict]
+    finalPredictList[1:len(trainPredict)+1] = toBeAdded
 
-    # De-normalizing for ploating
+    toBeAdded = [pred[0] for pred in testPredict]
+    finalPredictList[len(trainPredict)+3:len(df)-1] = toBeAdded
+
+    df["Predicted Close"] = finalPredictList
+    # Add predictions to closing value
+    for i, row in df.iterrows():
+        row["Predicted Close"] += row["Close"]
+
+    originalTickerTimeSeries = getTimeSeries(df, 'Open Time', 'Close')
+    predictedTickerTimeSeries = getTimeSeries(df, 'Open Time', 'Predicted Close')
+
     trainPredict = scaler.inverse_transform(trainPredict)
     trainY = scaler.inverse_transform([trainY])
     testPredict = scaler.inverse_transform(testPredict)
@@ -67,7 +87,9 @@ def predictLSTM(df):
         str(np.asscalar(last_val+next_val)),
         buySignal,
         str(trainScore),
-        str(testScore)
+        str(testScore),
+        originalTickerTimeSeries,
+        predictedTickerTimeSeries
     )
     res.show()
     return res  
