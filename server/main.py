@@ -9,6 +9,7 @@ import jsonpickle
 
 from utility.timeSeries import getTimeSeries
 from predictionModels.lstm import predictLSTM
+from predictionModels.arima import predictARIMA
 from returnClasses import Crypto
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
@@ -123,3 +124,24 @@ def get_forex_data(ticker: str = 'EURUSD=X JPY=X GBPUSD=X', period: Optional[str
             )
     print(forex)
     return parse_df_default(forex)
+
+
+@app.get("/forex")
+def get_forex_data(ticker: str, period: Optional[str] = "2y"):
+    forex = yf.download(
+                tickers = ticker,
+                period = period,
+                interval = "1d",    # interval is fixed to 1 day
+                group_by = "ticker"
+            )
+    
+    data_df = pd.DataFrame(forex)
+    # data_df.reset_index(inplace=True)
+    print(data_df)
+    # month=data_df.index
+    # print(month)
+    # forexclose_df=data_df['Close']
+    # print(data_df)
+    predict_res = predictARIMA(data_df)
+    print(predict_res)
+    return parse_df_default(data_df)
