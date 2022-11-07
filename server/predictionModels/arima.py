@@ -4,6 +4,7 @@ from matplotlib import pyplot
 import time
 import datetime
 from returnClasses.Forex import Forex
+import json
 
 def predictARIMA(df):
     def StartARIMAForecasting(Actual, P, D, Q):
@@ -24,7 +25,6 @@ def predictARIMA(df):
     month[-1]=month[-2]+86400
     # actual_data.index=month
     # actual_data=actual_data['Close']
-    print(actual_data)
 
     TrainingSize = int(num_data * 0.7)
     TrainingData = actual_data[0:TrainingSize]
@@ -41,7 +41,7 @@ def predictARIMA(df):
         #forcast value
         Timepoint = month[timepoint+TrainingSize]
         Prediction = StartARIMAForecasting(Actual, 3,1,0)    
-        print('Timepoint=%f, Actual=%f, Predicted=%f' % (Timepoint, ActualValue, Prediction))
+        # print('Timepoint=%f, Actual=%f, Predicted=%f' % (Timepoint, ActualValue, Prediction))
         #add it in the list
         Predictions.append(Prediction)
         Actual.append(ActualValue)
@@ -59,10 +59,23 @@ def predictARIMA(df):
     pred_val=StartARIMAForecasting(TestData[len(TestData)-10:],1,1,0)
     pred_res.append([Timepoints[-1]+86400, pred_val])
 
+    print(pred_val)
+    # print(json.dumps(actual_res))
+    # print(pred_res)
+
+    # res = Forex(
+    #     json.dumps(pred_val),
+    #     json.dumps(actual_res),
+    #     json.dumps(pred_res),
+    # )
+
     res = Forex(
+        pred_val,
+        actual_res,
         pred_res,
-        Timepoints,
-        Timepoints[:-1]
     )
     res.show()
-    return (res)
+    res.toJSON(pred_val, actual_res, pred_res)
+    # res.json()
+    # return (res.toJSON())
+    return res

@@ -139,7 +139,6 @@ def get_forex_data(ticker: str, period: Optional[str] = "2y"):
             )
     
     data_df = pd.DataFrame(forex)
-    
-    predict_res = predictARIMA(data_df)
-    print(predict_res)
-    return parse_df_default(data_df)
+    # return parse_df_default(data_df)
+    # cryptoJSON = jsonpickle.encode(predictARIMA(data_df))
+    return predictARIMA(data_df)
