@@ -6,8 +6,10 @@ class Crypto():
         self.buySignal = buySignal
         self.trainRMSE = trainRMSE
         self.testRMSE = testRMSE
-        self.originalTickerTimeSeries = json.dumps(originalTickerTimeSeries)
-        self.predictedTickerTimeSeries = json.dumps(predictedTickerTimeSeries)
+        self.originalTickerTimeSeries = originalTickerTimeSeries
+        self.predictedTickerTimeSeries = predictedTickerTimeSeries
+
+
 
     def show(self) -> None:
         print(f"Predicted Price : {self.predictedPrice}")

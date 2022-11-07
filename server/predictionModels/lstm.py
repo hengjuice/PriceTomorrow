@@ -52,7 +52,7 @@ def predictLSTM(df):
     trainPredict = model.predict(trainX).tolist() #Training data
     testPredict = model.predict(testX).tolist() #Testing data
 
-    finalPredictList = [np.nan] * len(df)
+    finalPredictList = [0] * len(df)
     toBeAdded = [pred[0] for pred in trainPredict]
     finalPredictList[1:len(trainPredict)+1] = toBeAdded
 

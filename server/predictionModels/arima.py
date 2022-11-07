@@ -1,6 +1,5 @@
 from statsmodels.tsa.arima.model import ARIMA
 # from sklearn.metrics import MeanSquaredError
-from matplotlib import pyplot
 import time
 import datetime
 from returnClasses.Forex import Forex
