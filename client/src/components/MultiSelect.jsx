@@ -62,7 +62,6 @@ const MultiSelect = (props) => {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
-    console.log("MultiSelect: ", value);
   };
 
   const handlePeriodSelect = (event) => {

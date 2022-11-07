@@ -5,6 +5,11 @@ from typing import Optional, Union
 from fastapi import FastAPI
 import json
 import pandas as pd
+import jsonpickle
+
+from utility.timeSeries import getTimeSeries
+from predictionModels.lstm import predictLSTM
+from returnClasses import Crypto
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
 api_secret = "rWULkBSHUf5FLHPaBvrBX7hiHjz4nlVWDuud14QJZ94Bccse0ZlQh0IL91ouqHnH"
@@ -22,7 +27,7 @@ def nest(d: dict) -> dict:
     return result
 
 def parse_df_default(df):
-    res = df.to_json(orient="index", date_format='iso')
+    res = df.to_json(orient="index")
     parsed = json.loads(res)
     return parsed     
 
@@ -51,7 +56,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
     Response JSON format:
 
 """
-@app.get("/all-crypto/")
+@app.get("/all-crypto")
 def get_all_crypto_data():
     client=Client(api_key,api_secret)
     data = client.get_all_tickers()
@@ -76,18 +81,23 @@ def get_all_crypto_data():
     Response JSON format:
 
 """
-@app.get("/single-crypto/")
+@app.get("/single-crypto")
 def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
+    print(f"SYMBOL {symbol} -------------- INTERVAL {interval}")
+    print(f"START STR {start_str} --------- END STR {end_str}")
+    
     client=Client(api_key,api_secret)
     historical_data = client.get_historical_klines(symbol, interval, start_str, end_str)
     hist_df = pd.DataFrame(historical_data).iloc[:,:6]
     hist_df.columns = ['Open Time', 'Open', 'High', 'Low', 'Close', 'Volume']
-    hist_df['Open Time'] = pd.to_datetime(hist_df['Open Time']/1000, unit='s')
+    hist_df['Open Time'] = hist_df['Open Time']/1000
+    # hist_df['Open Time'] = pd.to_datetime(hist_df['Open Time']/1000, unit='s')
     numeric_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
     hist_df[numeric_columns] = hist_df[numeric_columns].apply(pd.to_numeric, axis=1)
-    hist_df = hist_df.set_index("Open Time")
-
-    return parse_df_default(hist_df)
+    # hist_df = hist_df.set_index("Open Time")
+    cryptoJSON = jsonpickle.encode(predictLSTM(hist_df))
+    
+    return cryptoJSON
 
 
 """
