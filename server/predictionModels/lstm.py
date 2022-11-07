@@ -75,7 +75,7 @@ def predictLSTM(df):
     # Price for next day
     last_val = testPredict[-1]
     next_val = model.predict(np.reshape(last_val, (1,1,1)))
-    if np.asscalar(last_val)<np.asscalar(last_val+next_val):
+    if np.ndarray.item(last_val)<np.ndarray.item(last_val+next_val):
         buySignal = "BUY"
     else:
         buySignal = "DON'T BUY"
@@ -84,7 +84,7 @@ def predictLSTM(df):
     testScore = math.sqrt(mean_squared_error(testY[0], testPredict[:,0]))
 
     res = Crypto(
-        str(np.asscalar(last_val+next_val)),
+        str(np.ndarray.item(last_val+next_val)),
         buySignal,
         str(trainScore),
         str(testScore),
