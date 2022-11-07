@@ -136,12 +136,7 @@ def get_forex_data(ticker: str, period: Optional[str] = "2y"):
             )
     
     data_df = pd.DataFrame(forex)
-    # data_df.reset_index(inplace=True)
-    # print(data_df)
-    # month=data_df.index
-    # print(month)
-    # forexclose_df=data_df['Close']
-    # print(data_df)
+    
     predict_res = predictARIMA(data_df)
     print(predict_res)
     return parse_df_default(data_df)
