@@ -20,9 +20,10 @@ const Stocks = () => {
   const getPeriod = (param) => {
     setPeriod(param);
     console.log("Period | Stock", param);
-  }
+  };
 
-  if (isFetching) return <Loader />;
+  // causes page content to change -> loss in selected values in select buttons
+  // if (isFetching) return <Loader />;
 
   return (
     <>
