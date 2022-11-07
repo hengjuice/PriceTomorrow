@@ -13,10 +13,12 @@ def predictARIMA(df):
 
     
     actual_data=df['Close']
-    month=actual_data.index.to_pydatetime()
-    # month=month.timestamp()
+    # month=actual_data.index.to_pydatetime()
+    month=actual_data.index.tolist()
+    for i in range(len(month)):
+        month[i]=month[i].timestamp()
+
     num_data=len(df)
-    print(actual_data)
     TrainingSize = int(num_data * 0.7)
     TrainingData = actual_data[0:TrainingSize]
     TestData = actual_data[TrainingSize:num_data]
@@ -24,18 +26,21 @@ def predictARIMA(df):
     Actual = [x for x in TrainingData]
     Predictions = list()
     Timepoints=list()
+    pred_res=list()
+    actual_res=list()
 
     for timepoint in range(len(TestData)):
         ActualValue =  TestData[timepoint]
         #forcast value
         Timepoint = month[timepoint+TrainingSize]
         Prediction = StartARIMAForecasting(Actual, 3,1,0)    
-        print('Actual=%f, Predicted=%f' % (ActualValue, Prediction))
+        print('Timepoint=%f, Actual=%f, Predicted=%f' % (Timepoint, ActualValue, Prediction))
         #add it in the list
         Predictions.append(Prediction)
         Actual.append(ActualValue)
         Timepoints.append(Timepoint)
-
+        pred_res.append([Timepoint, Prediction])
+        actual_res.append([Timepoint, ActualValue])
     # Error = MeanSquaredError(TestData, Predictions)
     # print('Test Mean Squared Error (smaller the better fit): %.3f' % Error)
     # plot
@@ -43,4 +48,5 @@ def predictARIMA(df):
     # pyplot.plot(Predictions, color='red')
     # res=pyplot.show()
 
-    return (Predictions, Actual, Timepoints)
+    # return (Predictions, Actual, Timepoints)
+    return (pred_res)
