@@ -60,14 +60,7 @@ def predictARIMA(df):
     pred_res.append([Timepoints[-1]+86400, pred_val])
 
     print(pred_val)
-    # print(json.dumps(actual_res))
-    # print(pred_res)
 
-    # res = Forex(
-    #     json.dumps(pred_val),
-    #     json.dumps(actual_res),
-    #     json.dumps(pred_res),
-    # )
 
     res = Forex(
         pred_val,
@@ -75,7 +68,5 @@ def predictARIMA(df):
         pred_res,
     )
     res.show()
-    res.toJSON(pred_val, actual_res, pred_res)
-    # res.json()
-    # return (res.toJSON())
+
     return res

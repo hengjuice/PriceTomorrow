@@ -9,3 +9,6 @@ server/returnClasses/__pycache__/Forex.cpython-310.pyc
 server/predictionModels/__pycache__/arima.cpython-310.pyc
 server/predictionModels/__pycache__/arima.cpython-310.pyc
 server/returnClasses/__pycache__/Forex.cpython-310.pyc
+server/predictionModels/__pycache__/arima.cpython-310.pyc
+server/returnClasses/__pycache__/Crypto.cpython-310.pyc
+server/returnClasses/__pycache__/Forex.cpython-310.pyc
