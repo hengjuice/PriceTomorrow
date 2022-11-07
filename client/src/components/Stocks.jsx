@@ -12,10 +12,15 @@ const Stocks = () => {
   const { data, isFetching } = useGetStocksQuery({ticker: ticker, period: period});
   console.log("data: ", data);
 
-  const getTicker = (ticker) => {
-    setTicker(ticker);
-    console.log("In stock: ", ticker);
+  const getTicker = (param) => {
+    setTicker(param);
+    console.log("Ticker | Stock: ", param);
   };
+
+  const getPeriod = (param) => {
+    setPeriod(param);
+    console.log("Period | Stock", param);
+  }
 
   if (isFetching) return <Loader />;
 
@@ -25,6 +30,7 @@ const Stocks = () => {
       <SharedLayout 
         data = {timeseriesmockdata}
         getTicker = {getTicker}
+        getPeriod = {getPeriod}
       />
     </>
   )
