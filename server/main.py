@@ -9,6 +9,7 @@ import jsonpickle
 
 from utility.timeSeries import getTimeSeries
 from predictionModels.lstm import predictLSTM
+from predictionModels.arima import predictARIMA
 from returnClasses import Crypto
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
@@ -95,9 +96,9 @@ def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", sta
     numeric_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
     hist_df[numeric_columns] = hist_df[numeric_columns].apply(pd.to_numeric, axis=1)
     # hist_df = hist_df.set_index("Open Time")
-    cryptoJSON = jsonpickle.encode(predictLSTM(hist_df))
+    # cryptoJSON = jsonpickle.encode(predictLSTM(hist_df))
     
-    return cryptoJSON
+    return predictLSTM(hist_df)
 
 
 """
@@ -126,3 +127,16 @@ def get_forex_data(ticker: str = 'EURUSD=X JPY=X GBPUSD=X', period: Optional[str
             )
     print(forex)
     return parse_df_default(forex)
+
+
+@app.get("/forex")
+def get_forex_data(ticker: str, period: Optional[str] = "2y"):
+    forex = yf.download(
+                tickers = ticker,
+                period = period,
+                interval = "1d",    # interval is fixed to 1 day
+                group_by = "ticker"
+            )
+    
+    data_df = pd.DataFrame(forex)
+    return predictARIMA(data_df)
