@@ -57,7 +57,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
     Response JSON format:
 
 """
-@app.get("/all-crypto/")
+@app.get("/all-crypto")
 def get_all_crypto_data():
     client=Client(api_key,api_secret)
     data = client.get_all_tickers()
@@ -82,8 +82,11 @@ def get_all_crypto_data():
     Response JSON format:
 
 """
-@app.get("/single-crypto/")
+@app.get("/single-crypto")
 def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
+    print(f"SYMBOL {symbol} -------------- INTERVAL {interval}")
+    print(f"START STR {start_str} --------- END STR {end_str}")
+    
     client=Client(api_key,api_secret)
     historical_data = client.get_historical_klines(symbol, interval, start_str, end_str)
     hist_df = pd.DataFrame(historical_data).iloc[:,:6]
