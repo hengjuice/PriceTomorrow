@@ -6,7 +6,7 @@ const createRequest = (url) => ({url})
 
 export const stocksApi = createApi({
     reducerPath: 'stocksApi',
-    baseQuery: fetchBaseQuery({ baseUrl}),
+    baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
         getStocks: builder.query({
             query: ({ ticker, period }) => createRequest(`/stocks?ticker=${ticker}&period=${period}`),

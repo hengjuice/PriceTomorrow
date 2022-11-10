@@ -27,9 +27,11 @@ const Homepage = () => {
 
     return (
         <>
-            <Title level={2} className="heading">Welcome to Argus</Title>
+            <Title level={2} className="heading">Welcome to Stock Predictor Home</Title>
             <CryptoHP />
+            <br/>
             <StocksHP />
+            <br/>
             <ForexHP />
         </>
     )

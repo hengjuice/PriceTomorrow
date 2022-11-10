@@ -18,20 +18,20 @@ const baseUrl = 'https://bb-finance.p.rapidapi.com'
 // });
 const rapidApiStocksHeaders = {
     'X-RapidAPI-Key': 'abbff403f6msh5e1367cddd96b1cp103d18jsn9f50505b47d3',
-    'X-RapidAPI-Host': 'bb-finance.p.rapidapi.com'
-}
+    'X-RapidAPI-Host': 'apidojo-yahoo-finance-v1.p.rapidapi.com'
+  }
 
-const rapidApiStocksParams = {
-    id: 'nky:ind', 
-    template: 'STOCK'
-}
-const createRequest = (url) => ({url, headers: rapidApiStocksHeaders, params:rapidApiStocksParams})
+// const rapidApiStocksParams = {
+//     id: 'nky:ind', 
+//     template: 'STOCK'
+// }
+const createRequest = (url) => ({url, headers: rapidApiStocksHeaders})
 export const rapidApiStocks = createApi({
     reducerPath: 'rapidApiStocks',
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
         getMovers: builder.query({
-            query: () => createRequest(`/market/get-movers/`),
+            query: () => createRequest(`/market/get-trending-tickers/`),
         })
     })
 })
