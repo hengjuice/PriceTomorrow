@@ -1,3 +1,5 @@
+import json
+
 class Crypto():
     def __init__(self, predictedPrice: str, buySignal: str, trainRMSE: str, testRMSE: str, originalTickerTimeSeries = None, predictedTickerTimeSeries = None) -> None:
         self.predictedPrice = predictedPrice
@@ -6,6 +8,8 @@ class Crypto():
         self.testRMSE = testRMSE
         self.originalTickerTimeSeries = originalTickerTimeSeries
         self.predictedTickerTimeSeries = predictedTickerTimeSeries
+
+
 
     def show(self) -> None:
         print(f"Predicted Price : {self.predictedPrice}")

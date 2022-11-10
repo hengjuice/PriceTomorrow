@@ -1,1 +1,17 @@
 server/__pycache__/main.cpython-310.pyc
+server/predictionModels/__pycache__/arima.cpython-310.pyc
+server/predictionModels/__pycache__/lstm.cpython-310.pyc
+server/returnClasses/__pycache__/Crypto.cpython-310.pyc
+server/utility/__pycache__/timeSeries.cpython-310.pyc
+server/returnClasses/__pycache__/Forex.cpython-310.pyc
+server/predictionModels/__pycache__/lstm.cpython-310.pyc
+server/returnClasses/__pycache__/Forex.cpython-310.pyc
+server/predictionModels/__pycache__/arima.cpython-310.pyc
+server/predictionModels/__pycache__/arima.cpython-310.pyc
+server/returnClasses/__pycache__/Forex.cpython-310.pyc
+server/predictionModels/__pycache__/arima.cpython-310.pyc
+server/returnClasses/__pycache__/Crypto.cpython-310.pyc
+server/returnClasses/__pycache__/Forex.cpython-310.pyc
+server/predictionModels/__pycache__/arima.cpython-310.pyc
+server/returnClasses/__pycache__/Crypto.cpython-310.pyc
+server/returnClasses/__pycache__/Forex.cpython-310.pyc
