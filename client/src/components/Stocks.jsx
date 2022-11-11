@@ -4,6 +4,8 @@ import { useGetStocksQuery } from '../services/stocksApi'
 import Loader from './Loader';
 import SharedLayout from './SharedLayout';
 import { timeseriesmockdata } from './DataViz/mock_data/timeseriesmockdata';
+import { Typography } from 'antd';
+const { Title } = Typography;
 
 const Stocks = () => {
   const [ ticker, setTicker ] = useState();
@@ -27,7 +29,7 @@ const Stocks = () => {
 
   return (
     <>
-      <div>Stocks</div>
+      <Title level={2} className="heading">Stocks</Title>
       <SharedLayout 
         data = {timeseriesmockdata}
         getTicker = {getTicker}

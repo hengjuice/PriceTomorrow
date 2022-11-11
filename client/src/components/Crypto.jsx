@@ -3,7 +3,8 @@ import { useGetCryptoQuery } from '../services/cryptoApi';
 import Loader from './Loader';
 import { timeseriesmockdata } from './DataViz/mock_data/timeseriesmockdata';
 import SharedLayout from './SharedLayout';
-
+import { Typography } from 'antd';
+const { Title } = Typography;
 
 const Crypto = () => {
   const [ symbol, setSymbol ] = useState('BTCUSDT');
@@ -23,7 +24,7 @@ const Crypto = () => {
 
   return (
     <>
-      <div>Crypto</div>
+      <Title level={2} className="heading">Crypto</Title>
       <SharedLayout 
         data = {timeseriesmockdata}
         getTicker = {getSymbol}

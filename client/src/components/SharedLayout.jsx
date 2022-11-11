@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Grid, CircularProgress } from '@mui/material';
 import PriceChart from './DataViz/PriceChart';
 import MultiSelect from './MultiSelect';
+import StatsCard from './StatsCard'
 
 const SharedLayout = (props) => {
 	// const [ original, originalFetch ] = useState([]);
@@ -62,6 +63,29 @@ const SharedLayout = (props) => {
 							<PriceChart />
 						</Grid>
 
+					</Grid>
+					<br />
+					<Grid container spacing = {2}>
+						<Grid item xs = {3}>
+							<StatsCard 
+								model = {'ARIMA'}
+							/>
+						</Grid>
+						<Grid item xs = {3}>
+							<StatsCard 
+								model = {'LSTM'}
+							/>
+						</Grid>
+						<Grid item xs = {3}>
+							<StatsCard 
+								model = {'Linear Regression'}
+							/>
+						</Grid>
+						<Grid item xs = {3}>
+							<StatsCard 
+								model = {'NULL'}
+							/>
+						</Grid>
 					</Grid>
 				</div>
 			}
