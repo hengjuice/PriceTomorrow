@@ -119,14 +119,23 @@ def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str]
 
 """
 @app.get("/stocks")
-def get_ticker_data(ticker: str, period: Optional[str] = "2y"):
+def get_ticker_data(model: str, ticker: str, period: Optional[str] = "2y"):
     stocks = yf.download(
                 tickers = ticker,
                 period = period,
-                interval = "1d",    # interval is fixed to 1 day
+                interval = "1d",   # interval is fixed to 1 day
                 group_by = "ticker"
             )
-    return parse_df(stocks, ticker)
+    data_df = pd.DataFrame(stocks)
+
+    # WORK IN PROGRESS
+    if model == "LSTM":
+        return predictLSTM(data_df)
+    elif model == "ARIMA":
+        return predictARIMA(data_df)
+    elif model == "RANDOMFOREST":
+        return predictRF(stocks)
+    # return parse_df(stocks, ticker)
 
 @app.get("/all-forex")
 def get_forex_data(ticker: str = 'EURUSD=X JPY=X GBPUSD=X', period: Optional[str] = "2y", interval: Optional[str] = "1d"):
