@@ -67,11 +67,26 @@ def predictRF(data):
     # print(df)
     values=df['Close'].values
     # print(values)
-    data=series_to_supervised(values,n_in=1)
-    rmse, actual, pred = walk_forward_validation(data,1)
+    data=series_to_supervised(values,n_in=6)
+    rmse, actual, pred = walk_forward_validation(data,6)
+
+
+
+    train = series_to_supervised(values, n_in=6)
+    # split into input and output columns
+    trainX, trainy = train[:, :-1], train[:, -1]
+    # fit model
+    model = RandomForestRegressor(n_estimators=1000)
+    model.fit(trainX, trainy)
+    # construct an input for a new prediction
+    row = values[-6:].flatten()
+    # make a one-step prediction
+    yhat = model.predict(asarray([row]))
+    print('Input: %s, Predicted: %.3f' % (row, yhat[0]))
+    
 
     res = Forex(
-        predictedPrice=pred,
+        predictedPrice=yhat[0],
         testRMSE=str(rmse)
     )
     return res
