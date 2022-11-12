@@ -22,4 +22,5 @@ export default configureStore({
         .concat(rapidApiForex.middleware)
         .concat(stocksApi.middleware)
         .concat(cryptoApi.middleware)
+        .concat(forexApi.middleware)
 })

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState } from 'react';
+import { useGetForexQuery } from '../services/forexApi';
 import SharedLayout from './SharedLayout';
 import { Typography } from 'antd';
-import forexData from "../forex_tickers.json";
 import { timeseriesmockdata } from './DataViz/mock_data/timeseriesmockdata';
-import { useGetForexApi } from '../services/forexApi';
+import forexData from "../forex_tickers.json";
 
 const { Title } = Typography;
 
@@ -12,8 +12,8 @@ const Forex = () => {
   const [ ticker, setTicker ] = useState();
   const [ period, setPeriod ] = useState("2y");
 
-  // const { data, isFetching } = useGetForexApi({model: "LSTM", ticker: ticker, period: period});
-  // console.log('data: ', data);
+  const { data, isFetching } = useGetForexQuery({model: "LSTM", ticker: ticker, period: period});
+  console.log('data: ', data);
 
   const forex_ticker = JSON.parse(JSON.stringify(forexData))
 
