@@ -5,7 +5,18 @@ import Loader from './Loader';
 import SharedLayout from './SharedLayout';
 import { timeseriesmockdata } from './DataViz/mock_data/timeseriesmockdata';
 import { Typography } from 'antd';
+import data from "../tickers.json";
+
 const { Title } = Typography;
+
+// get all ticker names from json
+
+var dataString = JSON.stringify(data);
+dataString = dataString.split('"').join('');
+dataString = dataString.replace('[','');
+dataString = dataString.replace(']','');
+
+const stock_tickers = dataString.split(",");
 
 const Stocks = () => {
   const [ ticker, setTicker ] = useState();
@@ -31,6 +42,7 @@ const Stocks = () => {
     <>
       <Title level={2} className="heading">Stocks</Title>
       <SharedLayout 
+        tickers = {stock_tickers}
         data = {timeseriesmockdata}
         getTicker = {getTicker}
         getPeriod = {getPeriod}
