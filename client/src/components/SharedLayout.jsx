@@ -12,21 +12,10 @@ const SharedLayout = (props) => {
 
 	// const [normal, normalFetch] = useState([]);
 	const data = props.data;
-	const getTicker = props.getTicker;
-	const getPeriod = props.getPeriod;
 
 	const [finishLoading, setFinishLoading] = useState(false);
 
 
-	const chooseTicker = (param) => {
-		getTicker(param);
-		console.log("SharedLayout | ticker: ", param);
-	};
-
-	const choosePeriod = (param) => {
-		getPeriod(param);
-		console.log("sharedLayout | period: ", param);
-	}
 
 	return (
 		<>
@@ -36,7 +25,11 @@ const SharedLayout = (props) => {
 					<CircularProgress />
 				</div>:
 				<div>
-					<MultiSelect chooseTicker={chooseTicker} choosePeriod={choosePeriod} />
+					<MultiSelect
+						tickers={props.tickers}
+						chooseTicker={props.getTicker}
+						choosePeriod={props.getPeriod}
+					/>
 					<Grid container spacing = {2}>
 
 						<Grid item xs = {6}>

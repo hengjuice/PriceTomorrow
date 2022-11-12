@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Button, Box, OutlinedInput, InputLabel, MenuItem, FormControl, Select, Chip } from '@mui/material';
-import data from "../tickers.json";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -14,15 +13,6 @@ const MenuProps = {
   },
 };
 
-// get all ticker names from json
-
-var dataString = JSON.stringify(data);
-dataString = dataString.split('"').join('');
-dataString = dataString.replace('[','');
-dataString = dataString.replace(']','');
-
-const names = dataString.split(",");
-
 const time_periods = [
   {text: '1 Day', value: '1d'},
   {text: '5 Days', value: '5d'},
@@ -32,9 +22,7 @@ const time_periods = [
   {text: '1 Year', value: '1y'},
   {text: '2 Years', value: '2y'},
   {text: '5 Years', value: '5y'},
-  {text: '10 Years', value: '10y'},
-  {text: 'Year to Date', value: 'ytd'},
-  {text: 'Maximum', value: 'max'}
+  {text: '10 Years', value: '10y'}
 ]
 
 function getStyles(name, personName, theme) {
@@ -47,9 +35,7 @@ function getStyles(name, personName, theme) {
 }
 
 const MultiSelect = (props) => {
-  const chooseTicker = props.chooseTicker;
-  const choosePeriod = props.choosePeriod;
-
+  
   const theme = useTheme();
   const [ticker, setTicker] = React.useState([]);
   const [period, setPeriod] = React.useState([]);
@@ -73,8 +59,8 @@ const MultiSelect = (props) => {
   }
 
   const handleChange = () => {
-    chooseTicker(ticker);
-    choosePeriod(period);
+    props.chooseTicker(ticker);
+    props.choosePeriod(period);
   };
 
   return (
@@ -98,7 +84,7 @@ const MultiSelect = (props) => {
             )}
             MenuProps={MenuProps}
           >
-            {names.map((name) => (
+            {props.tickers.map((name) => (
               <MenuItem
                 key={name}
                 value={name}
