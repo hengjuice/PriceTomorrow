@@ -83,7 +83,7 @@ def get_all_crypto_data():
 
 """
 @app.get("/single-crypto")
-def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
+def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
     print(f"SYMBOL {symbol} -------------- INTERVAL {interval}")
     print(f"START STR {start_str} --------- END STR {end_str}")
     
@@ -96,7 +96,13 @@ def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", sta
     numeric_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
     hist_df[numeric_columns] = hist_df[numeric_columns].apply(pd.to_numeric, axis=1)
     # hist_df = hist_df.set_index("Open Time")
-    # cryptoJSON = jsonpickle.encode(predictLSTM(hist_df))
+
+    # WORK IN PROGRESS
+    # if model == "LSTM":
+    #     return predictLSTM
+    # elif model == "ARIMA":
+    #     return predictARIMA
+
     
     return predictLSTM(hist_df)
 
@@ -130,7 +136,7 @@ def get_forex_data(ticker: str = 'EURUSD=X JPY=X GBPUSD=X', period: Optional[str
 
 
 @app.get("/forex")
-def get_forex_data(ticker: str, period: Optional[str] = "2y"):
+def get_forex_data(model: str, ticker: str, period: Optional[str] = "2y"):
     forex = yf.download(
                 tickers = ticker,
                 period = period,
@@ -139,4 +145,11 @@ def get_forex_data(ticker: str, period: Optional[str] = "2y"):
             )
     
     data_df = pd.DataFrame(forex)
+
+    # WORK IN PROGRESS
+    # if model == "LSTM":
+    #     return predictLSTM
+    # elif model == "ARIMA":
+    #     return predictARIMA
+
     return predictARIMA(data_df)
