@@ -64,6 +64,7 @@ def predictLSTM(df):
     for i, row in df.iterrows():
         row["Predicted Close"] += row["Close"]
 
+    df['Open Time'] = df.index
     originalTickerTimeSeries = getTimeSeries(df, 'Open Time', 'Close')
     predictedTickerTimeSeries = getTimeSeries(df, 'Open Time', 'Predicted Close')
 

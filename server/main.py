@@ -83,7 +83,7 @@ def get_all_crypto_data():
 
 """
 @app.get("/single-crypto")
-def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
+def get_crypto_data(symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
     print(f"SYMBOL {symbol} -------------- INTERVAL {interval}")
     print(f"START STR {start_str} --------- END STR {end_str}")
     
@@ -91,11 +91,11 @@ def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str]
     historical_data = client.get_historical_klines(symbol, interval, start_str, end_str)
     hist_df = pd.DataFrame(historical_data).iloc[:,:6]
     hist_df.columns = ['Open Time', 'Open', 'High', 'Low', 'Close', 'Volume']
-    hist_df['Open Time'] = hist_df['Open Time']/1000
-    # hist_df['Open Time'] = pd.to_datetime(hist_df['Open Time']/1000, unit='s')
+    # hist_df['Open Time'] = hist_df['Open Time']/1000
+    hist_df['Open Time'] = pd.to_datetime(hist_df['Open Time']/1000, unit='s')
     numeric_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
     hist_df[numeric_columns] = hist_df[numeric_columns].apply(pd.to_numeric, axis=1)
-    # hist_df = hist_df.set_index("Open Time")
+    hist_df = hist_df.set_index("Open Time")
 
     # WORK IN PROGRESS
     # if model == "LSTM":
