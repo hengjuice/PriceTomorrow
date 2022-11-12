@@ -8,7 +8,6 @@ import pandas as pd
 import math
 from returnClasses.Crypto import Crypto
 from utility.timeSeries import getTimeSeries
-
 import json
 
 def parse_df_default(df):
