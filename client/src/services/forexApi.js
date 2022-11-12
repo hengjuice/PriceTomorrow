@@ -9,11 +9,11 @@ export const forexApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
         getForex: builder.query({
-            query: ({ model, ticker, period }) => createRequest(`forex?model=${model}&ticker=${ticker}&period=${period}`),
+            query: ({ model, ticker, period }) => createRequest(`forex?model=${model}&ticker=${ticker}&period=${period}`)
         }),
     })
 });
 
 export const {
-    useGetForexApi
+    useGetForexQuery
 } = forexApi
