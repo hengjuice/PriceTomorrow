@@ -10,6 +10,7 @@ import jsonpickle
 from utility.timeSeries import getTimeSeries
 from predictionModels.lstm import predictLSTM
 from predictionModels.arima import predictARIMA
+from predictionModels.randomforest import predictRF
 from returnClasses import Crypto
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
@@ -150,5 +151,7 @@ def get_forex_data(model: str, ticker: str, period: Optional[str] = "2y"):
     # WORK IN PROGRESS
     if model == "LSTM":
         return predictLSTM(data_df)
-    else:
+    elif model == "ARIMA":
         return predictARIMA(data_df)
+    elif model == "RANDOMFOREST":
+        return predictRF(forex)
