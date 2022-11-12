@@ -101,8 +101,10 @@ def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str]
     # WORK IN PROGRESS
     if model == "LSTM":
         return predictLSTM(data_df)
-    else:
+    elif model == "ARIMA":
         return predictARIMA(data_df)
+    else:
+        return predictRF(data_df)
 
     
     # return predictARIMA()
