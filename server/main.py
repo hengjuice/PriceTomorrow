@@ -83,7 +83,7 @@ def get_all_crypto_data():
 
 """
 @app.get("/single-crypto")
-def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2021.10.1', end_str: Optional[str] = '2021.11.1'):
+def get_crypto_data(model: str, symbol: str = 'BTCUSDT', interval: Optional[str] = "1d", start_str: Optional[str] = '2020.10.1', end_str: Optional[str] = '2021.11.1'):
     print(f"SYMBOL {symbol} -------------- INTERVAL {interval}")
     print(f"START STR {start_str} --------- END STR {end_str}")
     

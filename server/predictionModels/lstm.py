@@ -1,8 +1,10 @@
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, Activation
+from keras.layers import Dense, LSTM, Activation, Dropout
+from keras.metrics import MeanAbsoluteError
 import numpy as np
+import pandas as pd
 import math
 from returnClasses.Crypto import Crypto
 from utility.timeSeries import getTimeSeries
@@ -15,82 +17,99 @@ def parse_df_default(df):
     return parsed     
 
 def predictLSTM(df):
-    ClosePrice = df['Close']
+    df_close = df['Close']
 
-    ClosePrice = np.reshape(ClosePrice.values, (len(ClosePrice),1)) 
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    ClosePrice = scaler.fit_transform(ClosePrice)
+    df_close_log = df_close.apply(np.log)
+    df_close_tf = df_close_log.apply(np.sqrt)
 
-    # Splitting Training and Testing data
-    train_Data = int(len(ClosePrice) * 0.75) #75% data as train and 25% as test
-    test_Data = len(ClosePrice) - train_Data
-    train_Data, test_Data = ClosePrice[0:train_Data,:],ClosePrice[train_Data:len(ClosePrice),:]
+    df_close_shift = df_close_tf - df_close_tf.shift()
+    df_close_shift.dropna(inplace=True)
 
-    def new_dataset(dataset):
-        data_X, data_Y = [], []
-        for i in range(len(dataset)-2):
-            a = dataset[i:(i+1), 0]
-            data_X.append(a)
-            data_Y.append(dataset[i+1, 0])
-        return np.array(data_X), np.array(data_Y)
+    def preprocess_lstm(sequence, n_steps,n_features):
+        X, y = list(), list()
+        for i in range(len(sequence)):
+            # find the end of this pattern
+            end_ix = i + n_steps
+            # check if we are beyond the sequence
+            if end_ix >= len(sequence):
+                break
+            # gather input and output parts of the pattern
+            seq_x, seq_y = sequence[i:end_ix], sequence[end_ix]
+            X.append(seq_x)
+            y.append(seq_y)
+            
+        X = np.array(X)
+        y = np.array(y)
 
-    trainX, trainY = new_dataset(train_Data)
-    testX, testY = new_dataset(test_Data)
+        X = X.reshape((X.shape[0], X.shape[1], n_features))
+        return X, y
 
-    # ANN model
-    model = Sequential()
-    model.add(LSTM(32, input_shape=(1, 1), return_sequences = True))
-    model.add(LSTM(16))
-    model.add(Dense(1))
-    model.add(Activation('linear'))
+    # choose the number of days on which to base our predictions 
+    nb_days = 30
 
-    # Fitting model
-    model.compile(loss='mean_squared_error', optimizer='adagrad',metrics=['mse']) 
-    history=model.fit(trainX, trainY, epochs=2, batch_size=1, verbose=2)
+    n_features = 1
 
-    # Predicting 
-    trainPredict = model.predict(trainX).tolist() #Training data
-    testPredict = model.predict(testX).tolist() #Testing data
+    X, y = preprocess_lstm(df_close_shift.to_numpy(), nb_days, n_features)
 
-    finalPredictList = [0] * len(df)
-    toBeAdded = [pred[0] for pred in trainPredict]
-    finalPredictList[1:len(trainPredict)+1] = toBeAdded
+    #Split the data set between the training set and the test set
+    test_days = int(len(df) * 0.3)
 
-    toBeAdded = [pred[0] for pred in testPredict]
-    finalPredictList[len(trainPredict)+3:len(df)-1] = toBeAdded
+    X_train, y_train = X[:-test_days], y[:-test_days]
+    X_test, y_test = X[-test_days:], y[-test_days:]
 
-    df["Predicted Close"] = finalPredictList
-    # Add predictions to closing value
-    for i, row in df.iterrows():
-        row["Predicted Close"] += row["Close"]
+    train_original = df_close.iloc[:len(X_train)]
+    test_original = df_close.iloc[-test_days:]
 
-    df['Open Time'] = df.index
-    originalTickerTimeSeries = getTimeSeries(df, 'Open Time', 'Close')
-    predictedTickerTimeSeries = getTimeSeries(df, 'Open Time', 'Predicted Close')
+    def vanilla_LSTM():
+        model = Sequential()    
+        model.add(LSTM(units=50, input_shape=(nb_days, n_features)))
+        model.add(Dense(1))
+        return model
 
-    trainPredict = scaler.inverse_transform(trainPredict)
-    trainY = scaler.inverse_transform([trainY])
-    testPredict = scaler.inverse_transform(testPredict)
-    testY = scaler.inverse_transform([testY])
+    model = vanilla_LSTM()
+    model.summary()
+    model.compile(optimizer='adam', 
+                loss='mean_squared_error',
+                metrics=[MeanAbsoluteError()])
 
-    # Price for next day
-    last_val = testPredict[-1]
-    next_val = model.predict(np.reshape(last_val, (1,1,1)))
-    if np.ndarray.item(last_val)<np.ndarray.item(last_val+next_val):
-        buySignal = "BUY"
-    else:
-        buySignal = "DON'T BUY"
+    model.fit(X_train, 
+          y_train, 
+          epochs=2, 
+          batch_size = 32)
 
-    trainScore = math.sqrt(mean_squared_error(trainY[0], trainPredict[:,0]))
-    testScore = math.sqrt(mean_squared_error(testY[0], testPredict[:,0]))
+    results = model.evaluate(X_test, y_test, batch_size=32)
 
+    # Prediction
+    y_train_pred = model.predict(X_train)
+    train_pred_data = pd.DataFrame(y_train_pred[:,0], train_original.index,columns=['Close'])
+    train_pred_data['Close'] = train_pred_data['Close'] + df_close_tf.shift().values[:len(X_train)]
+
+    train_pred_data = train_pred_data.apply(np.square)
+    train_pred_data = train_pred_data.apply(np.exp)
+
+    train_pred_data = train_pred_data.fillna(0)
+
+    originalTickerTimeSeries = getTimeSeries(train_pred_data, 'Close')
+
+    # Prediction
+    y_test_pred = model.predict(X_test)
+    test_pred_data = pd.DataFrame(y_test_pred[:,0], test_original.index,columns=['Close'])
+    test_pred_data['Close'] = test_pred_data['Close'] + df_close_tf.shift().values[-test_days:]
+
+    test_pred_data = test_pred_data.apply(np.square)
+    test_pred_data = test_pred_data.apply(np.exp)
+
+    predictedTickerTimeSeries = getTimeSeries(test_pred_data, 'Close')
+
+    trainScore = math.sqrt(model.evaluate(X_train, y_train, batch_size=32)[0])
+    testScore = math.sqrt(model.evaluate(X_test, y_test, batch_size=32)[0])
+    
     res = Crypto(
-        str(np.ndarray.item(last_val+next_val)),
-        buySignal,
+        str(predictedTickerTimeSeries[-1][1]),
         str(trainScore),
         str(testScore),
         originalTickerTimeSeries,
         predictedTickerTimeSeries
     )
     res.show()
-    return res  
+    return res
