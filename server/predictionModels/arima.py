@@ -1,6 +1,6 @@
 from statsmodels.tsa.arima.model import ARIMA
-# from sklearn.metrics import MeanSquaredError
-import time
+from sklearn.metrics import mean_squared_error
+import math
 import datetime
 from returnClasses.Forex import Forex
 import json
@@ -48,7 +48,8 @@ def predictARIMA(df):
         pred_res.append([Timepoint, Prediction])
         actual_res.append([Timepoint, ActualValue])
 
-    # Error = MeanSquaredError(TestData, Predictions)
+    testScore = math.sqrt(mean_squared_error(TestData, Predictions))
+    print(testScore)
     # print('Test Mean Squared Error (smaller the better fit): %.3f' % Error)
     # plot
     # pyplot.plot(TestData)
@@ -58,11 +59,10 @@ def predictARIMA(df):
     pred_val=StartARIMAForecasting(TestData[len(TestData)-10:],1,1,0)
     pred_res.append([Timepoints[-1]+86400, pred_val])
 
-    print(pred_val)
-
 
     res = Forex(
         pred_val,
+        str(testScore),
         actual_res,
         pred_res,
     )
