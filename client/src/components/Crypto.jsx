@@ -14,7 +14,7 @@ const Crypto = () => {
   const [ start_str, setStartStr ] = useState('2021.10.1');
   const [ end_str, setEndStr ] = useState('2021.11.1');
 
-  const { data, isFetching } = useGetCryptoQuery({symbol: symbol, interval: interval, start_str: start_str, end_str: end_str});
+  const { data, isFetching } = useGetCryptoQuery({model: "LSTM", symbol: symbol, interval: interval, start_str: start_str, end_str: end_str});
   console.log("data: ", data);
 
   const crypto_ticker = JSON.parse(JSON.stringify(cryptoData));
@@ -51,7 +51,7 @@ const Crypto = () => {
     console.log("Crypto | start str", start_str);
   };
 
-  if (isFetching) return <Loader />;
+  // if (isFetching) return <Loader />;
 
   return (
     <>

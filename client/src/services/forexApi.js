@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-//TODO: add server URL
-const baseUrl = '';
+const baseUrl = 'http://127.0.0.1:8000/';
 
 const createRequest = (url) => ({url})
 
@@ -10,8 +9,11 @@ export const forexApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
         getForex: builder.query({
-            query: () => createRequest('/forex')
+            query: ({ model, ticker, period }) => createRequest(`forex?model=${model}&ticker=${ticker}&period=${period}`),
         }),
-        
     })
 });
+
+export const {
+    useGetForexApi
+} = forexApi
