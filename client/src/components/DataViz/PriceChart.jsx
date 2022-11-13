@@ -18,7 +18,10 @@ const PriceChart = (props) => {
               'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
       },
       xAxis: {
-          type: 'datetime'
+          type: 'datetime',
+          title: {
+            text: 'Date'
+        }
       },
       yAxis: {
           title: {
@@ -57,7 +60,11 @@ const PriceChart = (props) => {
       series: [
           {
               data: props.query?.data?.predictedTickerTimeSeries,
-              name: 'Market Value',
+              name: 'Predicted Market Value',
+          },
+          {
+            data: props.query?.data?.originalTickerTimeSeries,
+            name: 'Actual Market Value',
           }
       ]
     };

@@ -28,8 +28,6 @@ const Stocks = () => {
     setPeriod(param);
     console.log("Period | Stock", param);
   };
-
-  // const price = useGetStocksQuery({model: "PRICE", ticker: ticker, period: period});
   
   const arima = useGetStocksQuery({model: "ARIMA", ticker: ticker, period: period});
 
@@ -44,7 +42,6 @@ const Stocks = () => {
         tickers = {stock_tickers}
         getTicker = {getTicker}
         getPeriod = {getPeriod}
-        // price = {price}
         arima = {arima}
         lstm = {lstm}
         rf = {rf}
