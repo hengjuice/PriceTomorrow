@@ -59,6 +59,13 @@ def predictARIMA(df):
     pred_val=StartARIMAForecasting(TestData[len(TestData)-10:],1,1,0)
     pred_res.append([Timepoints[-1]+86400, pred_val])
 
+    for i, item in enumerate(actual_res):
+        new_time = item[0] * 1000
+        actual_res[i][0] = new_time
+
+    for i, item in enumerate(pred_res):
+        new_time = item[0] * 1000
+        pred_res[i][0] = new_time
 
     res = Forex(
         round(pred_val, 2),

@@ -135,7 +135,8 @@ def get_ticker_data(model: str, ticker: str, period: Optional[str] = "2y"):
         return predictARIMA(data_df)
     elif model == "RANDOMFOREST":
         return predictRF(stocks)
-    # return parse_df(stocks, ticker)
+    elif model == "PRICE":
+        return parse_df(stocks, ticker)
 
 @app.get("/all-forex")
 def get_forex_data(ticker: str = 'EURUSD=X JPY=X GBPUSD=X', period: Optional[str] = "2y", interval: Optional[str] = "1d"):
