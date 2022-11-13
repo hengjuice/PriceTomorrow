@@ -26,7 +26,8 @@ const SharedLayout = (props) => {
 							<h1>Price Trend</h1>
 							<PriceChart 
 								title = {"Price Trend"}
-								query = {props.arima}
+								original = {props.arima?.data?.originalTickerTimeSeries}
+								isLoading = {props.arima?.isLoading}
 							/>
 						</Grid>
 
@@ -34,7 +35,9 @@ const SharedLayout = (props) => {
 							<h1>ARIMA</h1>
 							<PriceChart
 								title = {"ARIMA"}
-								query = {props.arima}
+								predicted = {props.arima?.data?.predictedTickerTimeSeries}
+								original = {props.arima?.data?.originalTickerTimeSeries}
+								isLoading = {props.arima?.isLoading}
 							/>
 						</Grid>
 
@@ -42,7 +45,8 @@ const SharedLayout = (props) => {
 							<h1>Long Short Term Memory</h1>
 							<PriceChart
 								title = {"LSTM"}
-								query = {props.lstm}
+								predicted = {props.lstm?.data?.predictedTickerTimeSeries}
+								isLoading = {props.lstm?.isLoading}
 							/>
 						</Grid>
 
@@ -50,7 +54,8 @@ const SharedLayout = (props) => {
 							<h1>Random Forest</h1>
 							<PriceChart
 								title = {"Random Forest"}
-								query = {props.rf}
+								predicted = {props.rf?.data?.predictedTickerTimeSeries}
+								isLoading = {props.rf?.isLoading}
 							/>
 						</Grid>
 

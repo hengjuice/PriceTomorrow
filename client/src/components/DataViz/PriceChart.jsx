@@ -59,11 +59,11 @@ const PriceChart = (props) => {
     },
       series: [
           {
-              data: props.query?.data?.predictedTickerTimeSeries,
+              data: props.predicted,
               name: 'Predicted Market Value',
           },
           {
-            data: props.query?.data?.originalTickerTimeSeries,
+            data: props.original,
             name: 'Actual Market Value',
           }
       ]
@@ -73,7 +73,7 @@ const PriceChart = (props) => {
   
     }
   
-    if (props.query?.isLoading) return <Loader />;
+    if (props.isLoading) return <Loader />;
 
     return (
         <>
