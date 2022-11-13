@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Highcharts from 'highcharts';
 import HighChartsReact from 'highcharts-react-official';
-import { timeseriesmockdata } from './mock_data/timeseriesmockdata';
+import Loader from '../Loader';
 
 const PriceChart = (props) => {
 
-    const defaultOptions = {
+    var defaultOptions = {
       chart: {
           type: 'spline',
           zoomType: 'x'
@@ -56,7 +56,7 @@ const PriceChart = (props) => {
     },
       series: [
           {
-              data: props.data,
+              data: props.query?.data?.predictedTickerTimeSeries,
               name: 'Market Value',
           }
       ]
@@ -66,26 +66,13 @@ const PriceChart = (props) => {
   
     }
   
-    const [chartOptions, setChartOptions] = useState(defaultOptions);
-  
-    // How to trigger this while loading
-    const setData = () => {
-      console.log("setData is called")
-          console.log(props.timeSeriesData)
-        let data = chartOptions;
-        data.series = props.timeSeriesData;
-        setChartOptions(chartOptions);
-    }
-    
-    if(props.finshedLoading){
-      setData();
-    }
-  
+    if (props.query?.isLoading) return <Loader />;
+
     return (
         <>
             <div>
                 <HighChartsReact 
-                    highcharts={Highcharts} options={chartOptions}
+                    highcharts={Highcharts} options={defaultOptions} allowChartUpdate={false}
                 />
             </div>
         </>

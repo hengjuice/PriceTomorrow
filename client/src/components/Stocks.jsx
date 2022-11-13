@@ -1,16 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
 import { useGetStocksQuery } from '../services/stocksApi'
-import Loader from './Loader';
 import SharedLayout from './SharedLayout';
-import { timeseriesmockdata } from './DataViz/mock_data/timeseriesmockdata';
 import { Typography } from 'antd';
 import data from "../tickers.json";
 
 const { Title } = Typography;
 
 // get all ticker names from json
-
 var dataString = JSON.stringify(data);
 dataString = dataString.split('"').join('');
 dataString = dataString.replace('[','');
@@ -22,9 +19,6 @@ const Stocks = () => {
   const [ ticker, setTicker ] = useState();
   const [ period, setPeriod ] = useState("2y");
 
-  const { data, isFetching } = useGetStocksQuery({ticker: ticker, period: period});
-  console.log("data: ", data);
-
   const getTicker = (param) => {
     setTicker(param);
     console.log("Ticker | Stock: ", param);
@@ -35,17 +29,25 @@ const Stocks = () => {
     console.log("Period | Stock", param);
   };
 
-  // causes page content to change -> loss in selected values in select buttons
-  // if (isFetching) return <Loader />;
+  // const price = useGetStocksQuery({model: "PRICE", ticker: ticker, period: period});
+  
+  const arima = useGetStocksQuery({model: "ARIMA", ticker: ticker, period: period});
 
+  const lstm = useGetStocksQuery({model: "LSTM", ticker: ticker, period: period});
+
+  const rf = useGetStocksQuery({model: "RANDOMFOREST", ticker: ticker, period: period});
+  
   return (
     <>
       <Title level={2} className="heading">Stocks</Title>
       <SharedLayout 
         tickers = {stock_tickers}
-        data = {timeseriesmockdata}
         getTicker = {getTicker}
         getPeriod = {getPeriod}
+        // price = {price}
+        arima = {arima}
+        lstm = {lstm}
+        rf = {rf}
       />
     </>
   )

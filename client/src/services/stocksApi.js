@@ -9,7 +9,7 @@ export const stocksApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
         getStocks: builder.query({
-            query: ({ ticker, period }) => createRequest(`stocks?ticker=${ticker}&period=${period}`),
+            query: ({ model, ticker, period }) => createRequest(`stocks?model=${model}&ticker=${ticker}&period=${period}`),
         }),
     }),
 });
