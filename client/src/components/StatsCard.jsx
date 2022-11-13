@@ -26,11 +26,18 @@ const BasicCard = (props) => {
         <Typography variant="h5" component="div">
           R{bull}M{bull}S{bull}E
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        <Typography sx={{ mb: 1 }} color="text.secondary">
           Root Mean Square Error
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="h6">
           {props.query?.data?.testRMSE}
+          <br />
+        </Typography>
+        <Typography sx={{ mt: 2 }} variant="h5" component="div">
+          Predicted Price
+        </Typography>
+        <Typography variant="h6">
+          ${props.query?.data?.predictedPrice}
           <br />
         </Typography>
       </CardContent>

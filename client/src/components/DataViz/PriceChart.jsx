@@ -5,7 +5,7 @@ import Loader from '../Loader';
 
 const PriceChart = (props) => {
 
-    const defaultOptions = {
+    var defaultOptions = {
       chart: {
           type: 'spline',
           zoomType: 'x'
@@ -72,7 +72,7 @@ const PriceChart = (props) => {
         <>
             <div>
                 <HighChartsReact 
-                    highcharts={Highcharts} options={defaultOptions}
+                    highcharts={Highcharts} options={defaultOptions} allowChartUpdate={false}
                 />
             </div>
         </>

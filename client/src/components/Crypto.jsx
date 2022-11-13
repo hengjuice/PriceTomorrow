@@ -7,7 +7,7 @@ import cryptoData from "../crypto_tickers.json";
 const { Title } = Typography;
 
 const Crypto = () => {
-  const [ symbol, setSymbol ] = useState('BTCUSDT');
+  const [ symbol, setSymbol ] = useState();
   const [ start_str, setStartStr ] = useState('2021.10.1');
   const [ end_str, setEndStr ] = useState('2021.11.1');
 
