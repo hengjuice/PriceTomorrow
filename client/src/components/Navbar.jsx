@@ -30,7 +30,7 @@ const Navbar = () => {
                 <Link to="/crypto">Crypto</Link>
             </Menu.Item>
             <Menu.Item icon={<InfoCircleOutlined />}>
-                <Link to="/twitter">XXX</Link>
+                <Link to="/pairs">Pairs</Link>
             </Menu.Item>
             <Menu.Item icon={<FundOutlined />}>
                 <Link to="/analytics">XXX</Link>
