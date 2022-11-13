@@ -12,9 +12,6 @@ const Forex = () => {
   const [ ticker, setTicker ] = useState();
   const [ period, setPeriod ] = useState("2y");
 
-  const { data, isFetching } = useGetForexQuery({model: "LSTM", ticker: ticker, period: period});
-  console.log('data: ', data);
-
   const forex_ticker = JSON.parse(JSON.stringify(forexData))
 
   const getTicker = (param) => {
@@ -27,14 +24,22 @@ const Forex = () => {
     console.log("Period | Forex", param);
   };
 
+  const arima = useGetForexQuery({model: "ARIMA", ticker: ticker, period: period});
+
+  const lstm = useGetForexQuery({model: "LSTM", ticker: ticker, period: period});
+
+  const rf = useGetForexQuery({model: "RANDOMFOREST", ticker: ticker, period: period});
+
   return (
     <>
       <Title level={2} className="heading">Forex</Title>
       <SharedLayout
         tickers = {forex_ticker}
-        data = {timeseriesmockdata}
         getTicker = {getTicker}
         getPeriod = {getPeriod}
+        arima = {arima}
+        lstm = {lstm}
+        rf = {rf}
       />
     </>
   )

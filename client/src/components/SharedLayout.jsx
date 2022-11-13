@@ -5,17 +5,7 @@ import MultiSelect from './MultiSelect';
 import StatsCard from './StatsCard'
 
 const SharedLayout = (props) => {
-	// const [ original, originalFetch ] = useState([]);
-	// const [arima, arimaFetch] = useState([]);
-	// const [lstm, lstmFetch] = useState([]);
-	// const [linreg, linregFetch] = useState([]);
-
-	// const [normal, normalFetch] = useState([]);
-	const data = props.data;
-
 	const [finishLoading, setFinishLoading] = useState(false);
-
-
 
 	return (
 		<>
@@ -35,48 +25,54 @@ const SharedLayout = (props) => {
 						<Grid item xs = {6}>
 							<h1>Price Trend</h1>
 							<PriceChart 
-								data = {data}
-								finishLoading = {true}
-								title = {'Price Trend'}
+								title = {"Price Trend"}
+								query = {props.arima}
 							/>
 						</Grid>
 
 						<Grid item xs = {6}>
 							<h1>ARIMA</h1>
-							<PriceChart />
+							<PriceChart
+								title = {"ARIMA"}
+								query = {props.arima}
+							/>
 						</Grid>
 
 						<Grid item xs = {6}>
-							<h1>LSTM</h1>
-							<PriceChart />
+							<h1>Long Short Term Memory</h1>
+							<PriceChart
+								title = {"LSTM"}
+								query = {props.lstm}
+							/>
 						</Grid>
 
 						<Grid item xs = {6}>
-							<h1>Linear Regression</h1>
-							<PriceChart />
+							<h1>Random Forest</h1>
+							<PriceChart
+								title = {"Random Forest"}
+								query = {props.rf}
+							/>
 						</Grid>
 
 					</Grid>
 					<br />
 					<Grid container spacing = {2}>
-						<Grid item xs = {3}>
+						<Grid item xs = {4}>
 							<StatsCard 
 								model = {'ARIMA'}
+								query = {props.arima}
 							/>
 						</Grid>
-						<Grid item xs = {3}>
+						<Grid item xs = {4}>
 							<StatsCard 
 								model = {'LSTM'}
+								query = {props.lstm}
 							/>
 						</Grid>
-						<Grid item xs = {3}>
+						<Grid item xs = {4}>
 							<StatsCard 
 								model = {'Linear Regression'}
-							/>
-						</Grid>
-						<Grid item xs = {3}>
-							<StatsCard 
-								model = {'NULL'}
+								query = {props.rf}
 							/>
 						</Grid>
 					</Grid>

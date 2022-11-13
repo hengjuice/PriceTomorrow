@@ -9,7 +9,7 @@ export const cryptoApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
         getCrypto: builder.query({
-            query: ({ model, symbol, interval, start_str, end_str }) => createRequest(`single-crypto?model=${model}&symbol=${symbol}&interval=${interval}&start_str=${start_str}&end_str=${end_str}`)
+            query: ({ model, symbol, start_str, end_str }) => createRequest(`single-crypto?model=${model}&symbol=${symbol}&start_str=${start_str}&end_str=${end_str}`)
         }),
         
     })

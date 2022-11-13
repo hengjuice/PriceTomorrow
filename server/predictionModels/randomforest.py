@@ -105,7 +105,7 @@ def predictRF(data):
 
     res = Forex(
         predictedPrice=yhat[0],
-        testRMSE=str(rmse),
+        testRMSE=str(round(rmse, 3)),
         originalTickerTimeSeries=actual_res,
         predictedTickerTimeSeries=pred_res,
     )

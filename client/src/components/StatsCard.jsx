@@ -14,7 +14,9 @@ const bull = (
     •
   </Box>
 );
+
 const BasicCard = (props) => {
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -28,7 +30,7 @@ const BasicCard = (props) => {
           Root Mean Square Error
         </Typography>
         <Typography variant="body2">
-          50%?
+          {props.query?.data?.testRMSE}
           <br />
         </Typography>
       </CardContent>

@@ -106,7 +106,7 @@ def predictLSTM(df):
     res = Crypto(
         str(predictedTickerTimeSeries[-1][1]),
         str(trainScore),
-        str(testScore),
+        str(round(testScore, 3)),
         originalTickerTimeSeries,
         predictedTickerTimeSeries
     )

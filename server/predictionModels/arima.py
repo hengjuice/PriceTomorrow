@@ -62,7 +62,7 @@ def predictARIMA(df):
 
     res = Forex(
         pred_val,
-        str(testScore),
+        str(round(testScore, 3)),
         actual_res,
         pred_res,
     )

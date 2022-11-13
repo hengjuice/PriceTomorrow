@@ -14,10 +14,6 @@ const MenuProps = {
 };
 
 const time_periods = [
-  {text: '1 Day', value: '1d'},
-  {text: '5 Days', value: '5d'},
-  {text: '1 Month', value: '1mo'},
-  {text: '3 Months', value: '3mo'},
   {text: '6 Months', value: '6mo'},
   {text: '1 Year', value: '1y'},
   {text: '2 Years', value: '2y'},
