@@ -56,7 +56,7 @@ def predictLSTM(df):
     X_train, y_train = X[:-test_days], y[:-test_days]
     X_test, y_test = X[-test_days:], y[-test_days:]
 
-    train_original = df_close.iloc[:len(X_train)]
+    train_original = df_close.iloc[nb_days+1:-test_days]
     test_original = df_close.iloc[-test_days:]
 
     def vanilla_LSTM():
@@ -81,7 +81,7 @@ def predictLSTM(df):
     # Prediction
     y_train_pred = model.predict(X_train)
     train_pred_data = pd.DataFrame(y_train_pred[:,0], train_original.index,columns=['Close'])
-    train_pred_data['Close'] = train_pred_data['Close'] + df_close_tf.shift().values[:len(X_train)]
+    train_pred_data['Close'] = train_pred_data['Close'] + df_close_tf.shift().values[nb_days+1:-test_days]
 
     train_pred_data = train_pred_data.apply(np.square)
     train_pred_data = train_pred_data.apply(np.exp)
@@ -92,6 +92,8 @@ def predictLSTM(df):
 
     # Prediction
     y_test_pred = model.predict(X_test)
+    print(len(y_test_pred))
+    print(len(test_original))
     test_pred_data = pd.DataFrame(y_test_pred[:,0], test_original.index,columns=['Close'])
     test_pred_data['Close'] = test_pred_data['Close'] + df_close_tf.shift().values[-test_days:]
 
@@ -103,18 +105,10 @@ def predictLSTM(df):
     trainScore = math.sqrt(model.evaluate(X_train, y_train, batch_size=32)[0])
     testScore = math.sqrt(model.evaluate(X_test, y_test, batch_size=32)[0])
     
-    for i, item in enumerate(originalTickerTimeSeries):
-        new_time = item[0] * 1000
-        originalTickerTimeSeries[i][0] = new_time
-
-    for i, item in enumerate(predictedTickerTimeSeries):
-        new_time = item[0] * 1000
-        predictedTickerTimeSeries[i][0] = new_time
-
     res = Crypto(
-        str(round(predictedTickerTimeSeries[-1][1], 2)),
+        str(predictedTickerTimeSeries[-1][1]),
         str(trainScore),
-        str(round(testScore, 3)),
+        str(testScore),
         originalTickerTimeSeries,
         predictedTickerTimeSeries
     )
