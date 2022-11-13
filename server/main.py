@@ -1,6 +1,7 @@
 import yfinance as yf
 from binance.client import Client
 from typing import Optional, Union
+import uvicorn
 
 from fastapi import FastAPI
 import json
@@ -43,6 +44,7 @@ def parse_df(df, ticker):
     d = df.to_dict(orient='index')
     res = {k: nest(v) for k, v in d.items()}
     return res
+
 
 @app.get("/")
 def read_root():
@@ -166,3 +168,6 @@ def get_forex_data(model: str, ticker: str, period: Optional[str] = "2y"):
         return predictARIMA(data_df)
     elif model == "RANDOMFOREST":
         return predictRF(forex)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
