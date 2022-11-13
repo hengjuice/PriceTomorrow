@@ -13,6 +13,7 @@ from predictionModels.lstm import predictLSTM
 from predictionModels.arima import predictARIMA
 from predictionModels.randomforest import predictRF
 from returnClasses import Crypto
+from returnClasses import Pairs
 
 api_key = "xUUAHD0zr0sZgbl6IVMkPNeiiDWUUZgg80tjT05iKXSWTtLkXjx5w7tpDsyjF281"
 api_secret = "rWULkBSHUf5FLHPaBvrBX7hiHjz4nlVWDuud14QJZ94Bccse0ZlQh0IL91ouqHnH"
@@ -169,6 +170,32 @@ def get_forex_data(model: str, ticker: str, period: Optional[str] = "2y"):
         return predictARIMA(data_df)
     elif model == "RANDOMFOREST":
         return predictRF(forex)
+
+
+
+@app.get("/pairs-data")
+def get_pairs_data():
+    etf_data = Pairs.Pairs.getETFs(True)
+    etf_data_2 = Pairs.Pairs.featureEngineering(etf_data)
+    clustered_series = Pairs.Pairs.clustering(etf_data_2, flow='data')
+    
+    return parse_df_default(clustered_series)
+
+@app.get("/pairs-cluster")
+def get_pairs_cluster_plot():
+    etf_data = Pairs.Pairs.getETFs(True)
+    etf_data_2 = Pairs.Pairs.featureEngineering(etf_data)
+    cluster_plots = Pairs.Pairs.clustering(etf_data_2, flow='plot')
+    return cluster_plots
+
+@app.get("/pairs-bar")
+def get_pairs_bar_plot():
+    etf_data = Pairs.Pairs.getETFs(True)
+    etf_data_2 = Pairs.Pairs.featureEngineering(etf_data)
+    cluster_plots = Pairs.Pairs.clustering(etf_data_2, flow='bar')
+    return cluster_plots
+
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
