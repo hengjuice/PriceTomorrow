@@ -104,7 +104,7 @@ def predictRF(data):
     pred_res.append([month[-1]+86400, yhat[0]])
 
     res = Forex(
-        predictedPrice=yhat[0],
+        predictedPrice=round(yhat[0], 2),
         testRMSE=str(round(rmse, 3)),
         originalTickerTimeSeries=actual_res,
         predictedTickerTimeSeries=pred_res,

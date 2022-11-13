@@ -104,7 +104,7 @@ def predictLSTM(df):
     testScore = math.sqrt(model.evaluate(X_test, y_test, batch_size=32)[0])
     
     res = Crypto(
-        str(predictedTickerTimeSeries[-1][1]),
+        str(round(predictedTickerTimeSeries[-1][1], 2)),
         str(trainScore),
         str(round(testScore, 3)),
         originalTickerTimeSeries,
