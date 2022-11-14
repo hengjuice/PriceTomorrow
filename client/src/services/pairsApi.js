@@ -8,22 +8,27 @@ export const pairsApi = createApi({
     reducerPath: 'pairsApi',
     baseQuery: fetchBaseQuery({ baseUrl }),
     endpoints: (builder) => ({
-        getPairsData: builder.query({
-            query: () => createRequest(`pairs-data`)
-        }),
+        // getPairsData: builder.query({
+        //     query: () => createRequest(`pairs-data`)
+        // }),
 
-        getPairsCluster: builder.query({
-            query: () => createRequest(`pairs-cluster`)
-        }),
+        // getPairsCluster: builder.query({
+        //     query: () => createRequest(`pairs-cluster`)
+        // }),
 
-        getPairsBar: builder.query({
-            query: () => createRequest(`pairs-bar`)
-        }),
+        // getPairsBar: builder.query({
+        //     query: () => createRequest(`pairs-bar`)
+        // }),
+        
+        getPairs: builder.query({
+            query: () => createRequest("pairs")
+        })
     })
 });
 
 export const {
-    useGetPairsDataQuery,
-    useGetPairsClusterQuery,
-    useGetPairsBarQuery
+    // useGetPairsDataQuery,
+    // useGetPairsClusterQuery,
+    // useGetPairsBarQuery
+    useGetPairsQuery
 } = pairsApi

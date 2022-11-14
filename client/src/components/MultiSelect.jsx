@@ -61,7 +61,7 @@ const MultiSelect = (props) => {
 
   return (
     <div>
-      <Box sx={{display: 'flex'}}>
+      <Box sx={{display: 'flex', mb: 4}}>
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="demo-multiple-chip-label">Please Select Tickers</InputLabel>
           <Select

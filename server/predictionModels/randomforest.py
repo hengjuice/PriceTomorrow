@@ -98,6 +98,9 @@ def predictRF(data):
         actual_res[i]= [months[i],actuals[i]]
     res = Forex(
         predictedPrice=yhat[0],
+        originalPrice=None,
+        openingPrice=None,
+        lastWeekPrice=None,
         testRMSE=str(rmse)
     )
 
@@ -113,6 +116,9 @@ def predictRF(data):
 
     res = Forex(
         predictedPrice=round(yhat[0], 2),
+        originalPrice=round(actual_res[-1][1], 2),
+        openingPrice=None,
+        lastWeekPrice=None,
         testRMSE=str(round(rmse, 3)),
         originalTickerTimeSeries=actual_res,
         predictedTickerTimeSeries=pred_res,

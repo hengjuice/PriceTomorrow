@@ -75,7 +75,7 @@ class Pairs:
         df_scaled = scaled_data
         return df_scaled
 
-    def clustering(df_scaled: pd.DataFrame, flow):
+    def clustering(df_scaled: pd.DataFrame):
         # Find the optimum number of clusters
         X = df_scaled.copy()
         K = range(1, 15)
@@ -111,22 +111,23 @@ class Pairs:
             return mpld3.fig_to_dict(fig)
 
         def get_plot_bar(clustered_series):
-            fig = plt.figure(figsize=(10, 5))
+            fig = plt.figure(figsize=(15, 8))
             plt.bar(range(len(clustered_series.value_counts())), clustered_series.value_counts())
             plt.title("Clusters")
             plt.xlabel("Cluster")
             plt.ylabel("Features Count")
             return mpld3.fig_to_dict(fig)
         
-        if flow == 'plot':
-            return get_plot_clusters(k_means)
+        return clustered_series, get_plot_clusters(k_means), get_plot_bar(clustered_series)
+        # if flow == 'plot':
+        #     return get_plot_clusters(k_means)
 
-        # flow can be 'data', 'plot'
-        elif flow == 'data':
-            # Return the series
-            return clustered_series 
-        elif flow == 'bar':
-            return get_plot_bar(clustered_series)
+        # # flow can be 'data', 'plot'
+        # elif flow == 'data':
+        #     # Return the series
+        #     return clustered_series 
+        # elif flow == 'bar':
+        #     return get_plot_bar(clustered_series)
 
 
 # Cluster Plotting

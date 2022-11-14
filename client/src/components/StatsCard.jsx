@@ -17,34 +17,44 @@ const bull = (
 
 const BasicCard = (props) => {
 
+  var buy = false;
+  if (props.query?.data?.predictedPrice > props.query?.data?.originalPrice) {
+    buy = true;
+  }
+  
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {props.model}
-        </Typography>
-        <Typography variant="h5" component="div">
-          R{bull}M{bull}S{bull}E
-        </Typography>
-        <Typography sx={{ mb: 1 }} color="text.secondary">
-          Root Mean Square Error
-        </Typography>
-        <Typography variant="h6">
-          {props.query?.data?.testRMSE}
-          <br />
-        </Typography>
-        <Typography sx={{ mt: 2 }} variant="h5" component="div">
-          Predicted Price
-        </Typography>
-        <Typography variant="h6">
-          ${props.query?.data?.predictedPrice}
-          <br />
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <>
+      <Card>
+        <CardContent sx={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', bgcolor: buy ? '#00C100' : '#E10000'}}>
+          <Typography variant="h5" sx={{color: '#edeeec', fontWeight: 500}}>
+            ${props.query?.data?.predictedPrice}
+          </Typography>
+          <Typography sx={{ fontSize: 16, mt: 1, color: '#edeeec' }} component="div">
+            Today's Predicted Closing Price by
+          </Typography>
+          <Typography sx={{ fontSize: 14, color: '#edeeec' }} gutterBottom>
+            {props.model}
+          </Typography>
+        </CardContent>
+      </Card>
+      <Card sx={{ minWidth: 225, mt: 4 }}>
+        <CardContent sx={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end', bgcolor: '#3462FF'}}>
+          <Typography sx={{ fontSize: 14, color: '#edeeec' }} gutterBottom>
+            {props.model}
+          </Typography>
+          <Typography sx={{color: '#edeeec'}} variant="h5" component="div">
+            R{bull}M{bull}S{bull}E
+          </Typography>
+          <Typography sx={{ mb: 1, color: '#edeeec' }}>
+            Root Mean Square Error
+          </Typography>
+          <Typography variant="h6" sx={{color: '#edeeec'}}>
+            {props.query?.data?.testRMSE}
+            <br />
+          </Typography>
+        </CardContent>
+      </Card>
+    </>
   );
 }
 

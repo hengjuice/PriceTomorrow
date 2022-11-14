@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Menu, Typography, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 import { HomeOutlined, MoneyCollectOutlined, BulbOutlined, FundOutlined, MenuOutlined, DollarCircleOutlined, InfoCircleOutlined, UserSwitchOutlined } from '@ant-design/icons';
-import icon from "../images/ntu.png";
+import icon from "../images/icon.png";
 
 const Navbar = () => {
     return (

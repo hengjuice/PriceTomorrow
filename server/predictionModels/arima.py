@@ -69,6 +69,9 @@ def predictARIMA(df):
 
     res = Forex(
         round(pred_val, 2),
+        round(actual_res[-1][1], 2),
+        round(actual_res[-2][1], 2),
+        round(actual_res[-7][1], 2),
         str(round(testScore, 3)),
         actual_res,
         pred_res,
