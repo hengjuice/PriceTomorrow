@@ -32,9 +32,6 @@ const Navbar = () => {
             <Menu.Item icon={<InfoCircleOutlined />}>
                 <Link to="/pairs">Pairs</Link>
             </Menu.Item>
-            <Menu.Item icon={<FundOutlined />}>
-                <Link to="/analytics">XXX</Link>
-            </Menu.Item>
             {/* <Menu.Item icon={<FundOutlined />}>
                 <Link to="/cryptocurrencies">Cryptocurrencies</Link>
             </Menu.Item>

@@ -37,7 +37,7 @@ const Pairs = () => {
                     <div id={fig_name}></div>
                 </Grid>
                 
-                <Grid item xs={12} sx={{ml: 18}}>
+                <Grid item xs={12}>
                     <script>
                         mpld3_load_lib("https://d3js.org/d3.v5.js", function () {
                         mpld3_load_lib("https://mpld3.github.io/js/mpld3.v0.5.8.js", function () {
