@@ -390,3 +390,8 @@ text-align: center;
 font-weight: bold;
 background-color: #C6EBC5;
 }
+
+.site-card-border-less-wrapper {
+    padding: 30px;
+    background: #ececec;
+}

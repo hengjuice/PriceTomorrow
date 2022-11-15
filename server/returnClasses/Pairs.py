@@ -48,7 +48,10 @@ class Pairs:
         symbols = symbols[(symbols["ETF"] == True) & (symbols["Market Category"] == "G")] # G = NASDAQ GLOBAL MARKET
         symbols = list(symbols.index.values)
         #data = DataReader(name=symbols, data_source='yahoo', start=start_date, end=end_date)["Adj Close"] # Dataframe
-        data = pd.read_csv('raw_data_etf.csv')
+        try:
+            data = pd.read_csv('raw_data_etf.csv')
+        except:
+            data = pd.read_csv('../raw_data_etf.csv')
         '''
         Data Cleaning - Remove NA values
         '''
@@ -129,13 +132,76 @@ class Pairs:
         # elif flow == 'bar':
         #     return get_plot_bar(clustered_series)
 
+        
+        
+
+    def cointegrated_pairs(clustered_series, data):
+        # Remove items from clustered_series
+        clusters_clean = clustered_series[clustered_series < 3]
+        print("Feature Number Previous: ", len(clustered_series))
+        print("Feature Number Current: ", len(clusters_clean))
+
+
+        def calculate_cointegration(series_1, series_2):
+            '''
+            Calculate cointegration
+            '''
+            coint_flag = 0
+            coint_res = coint(series_1, series_2)
+            coint_t = coint_res[0]
+            p_value = coint_res[1]
+            critical_value = coint_res[2][1]
+            model = sm.OLS(series_1, series_2).fit()
+            hedge_ratio = model.params[0]
+            coint_flag = 1 if p_value < 0.05 and coint_t < critical_value else 0
+            return coint_flag, hedge_ratio
+        
+
+        # Loop through and calculate cointegrated pairs
+        # Allow 10 - 30 mins for calculation 
+        tested_pairs = []
+        cointegrated_pairs = []
+
+
+        # for base_asset in clusters_clean.index:
+        #     base_label = clusters_clean[base_asset]
+            
+        #     for compare_asset in clusters_clean.index:
+        #         compare_label = clusters_clean[compare_asset]
+                
+        #         test_pair = base_asset + compare_asset
+        #         test_pair = ''.join(sorted(test_pair))
+        #         is_tested = test_pair in tested_pairs
+        #         tested_pairs.append(test_pair)
+                
+        #         if compare_asset != base_asset and base_label == compare_label and not is_tested:
+                    
+        #             series_1 = data[base_asset].values.astype(float)
+        #             series_2 = data[compare_asset].values.astype(float)
+        #             coint_flag, _ = calculate_cointegration(series_1, series_2)
+        #             if coint_flag == 1:
+        #                 cointegrated_pairs.append({"base_asset": base_asset, 
+        #                                         "compare_asset": compare_asset, 
+        #                                         "label": base_label})
+        # df_coint = pd.DataFrame(cointegrated_pairs).sort_values(by="label")
+        
+        # Load offline Data
+        try:
+            df_coint = pd.read_csv('raw_data_coint_pairs.csv')
+        except:
+            df_coint = pd.read_csv('../raw_data_coint_pairs.csv')
+
+        return df_coint
+                
+
 
 # Cluster Plotting
 if __name__ == '__main__':
     etf_data = Pairs.getETFs(True)
     etf_data_2 = Pairs.featureEngineering(etf_data)
-    clustered_series = Pairs.clustering(etf_data_2, flow='data')
-    cluster_plots = Pairs.clustering(etf_data_2, flow='plot')
+    clustered_series,_,_ = Pairs.clustering(etf_data_2)
+    coint_df = Pairs.cointegrated_pairs(clustered_series, etf_data)
+    print(coint_df)
     
 
 

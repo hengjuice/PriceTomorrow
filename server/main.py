@@ -175,9 +175,13 @@ def get_pairs():
     etf_data = Pairs.Pairs.getETFs(True)
     etf_data_2 = Pairs.Pairs.featureEngineering(etf_data)
     clustered_series, cluster_plots, cluster_bar = Pairs.Pairs.clustering(etf_data_2)
+    coint_df = Pairs.Pairs.cointegrated_pairs(clustered_series, etf_data)
     # print(clustered_series)
     clustered_series = parse_df_default(clustered_series)
-    return clustered_series, cluster_plots, cluster_bar
+    #print(coint_df.to_json(orient="records"))
+    coint_df = json.loads(coint_df.to_json(orient="records"))
+    #print(coint_df)
+    return clustered_series, cluster_plots, cluster_bar, coint_df
 
 # @app.get("/pairs-data")
 # def get_pairs_data():
