@@ -146,14 +146,14 @@ class Pairs:
             '''
             Calculate cointegration
             '''
-            coint_flag = 0
-            coint_res = coint(series_1, series_2)
-            coint_t = coint_res[0]
-            p_value = coint_res[1]
-            critical_value = coint_res[2][1]
+            coint_flag = 0 # flags whether the pair is cointegrated or not
+            coint_res = coint(series_1, series_2) # cointegration result - from statsmodels.tsa.stattools import coint
+            coint_t = coint_res[0] # test result
+            p_value = coint_res[1] # p-value statistical measure for signifance, we're using 5% level of significance
+            critical_value = coint_res[2][1] # critical value
             model = sm.OLS(series_1, series_2).fit()
-            hedge_ratio = model.params[0]
-            coint_flag = 1 if p_value < 0.05 and coint_t < critical_value else 0
+            hedge_ratio = model.params[0] # need it in order to calculate the spread
+            coint_flag = 1 if p_value < 0.05 and coint_t < critical_value else 0 #statistically significant
             return coint_flag, hedge_ratio
         
 
