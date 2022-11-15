@@ -39,7 +39,7 @@ def predictARIMA(df):
         ActualValue =  TestData[timepoint]
         #forcast value
         Timepoint = month[timepoint+TrainingSize]
-        Prediction = StartARIMAForecasting(Actual, 3,1,0)    
+        Prediction = StartARIMAForecasting(Actual, 7,1,0)    
         # print('Timepoint=%f, Actual=%f, Predicted=%f' % (Timepoint, ActualValue, Prediction))
         #add it in the list
         Predictions.append(Prediction)
