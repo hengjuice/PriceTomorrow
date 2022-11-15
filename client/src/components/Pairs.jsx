@@ -68,9 +68,9 @@ const Pairs = () => {
     <br/>
 K-Means Clustering is a Clustering technique as to which a vast array of features can have their data compared with one another and grouped into clusters of similarity. The applications of this are vast as described in the theory sections of the course.
 
-Once ETFs pairs are grouped, they can then have cointegration calculations run against them to further help with statistical methods. Although cointegration is more a statistics method rather than Machine Learning</p>
+Once ETFs pairs are grouped, they can then have cointegration calculations run against them to further help with statistical methods. Although cointegration is more a statistics method rather than Machine Learning, it is necessary to complement the clustering method.</p>
                         </Card>
-                    </div>
+                    </div><br/>
                 </Grid>
                 <Title level={3} className="heading">Clustering of ETFs</Title>
                 <Grid item xs={12}>
